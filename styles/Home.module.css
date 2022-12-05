@@ -13,6 +13,8 @@
 }
 
 .canvas {
+  width: 800px;
+  height: 500px;
   @apply mt-4 border;
 }
 

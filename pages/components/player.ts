@@ -45,8 +45,8 @@ export class Player {
       ctx.lineWidth = 0.2;
       ctx.beginPath();
       ctx.moveTo(this.x, this.y);
-      // ctx.lineTo(this.game.mouse.x, this.game.mouse.y);
-      // ctx.stroke();
+      ctx.lineTo(this.game.mouse.x, this.game.mouse.y);
+      ctx.stroke();
     }
     ctx.fillStyle = "red";
     ctx.beginPath();
