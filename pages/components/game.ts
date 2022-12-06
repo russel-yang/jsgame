@@ -1,3 +1,4 @@
+import { Bubble } from "./bubble";
 import { Player } from "./player";
 
 export interface Mouse {
@@ -13,6 +14,8 @@ export class Game {
   ctx: CanvasRenderingContext2D | null;
   mouse: Mouse;
   player: Player;
+  bubbles: Bubble[];
+  frame: number;
 
   constructor(canvas: HTMLCanvasElement) {
     const rect = canvas.getBoundingClientRect();
@@ -38,21 +41,35 @@ export class Game {
       this.mouse.clicked = false;
     });
 
+    this.frame = 0;
     this.player = new Player(this);
+
+    this.bubbles = [];
   }
 
   update() {
     this.player.update();
+    if (this.frame % 50 === 0) {
+      this.bubbles.push(new Bubble(this));
+    }
+    this.bubbles.forEach((bubble, index) => {
+      if (bubble.y < 0) {
+        this.bubbles.splice(index, 1);
+      }
+      bubble.update();
+    });
   }
 
   draw() {
     if (this.ctx) {
       this.ctx.clearRect(0, 0, this.width, this.height);
       this.player.draw(this.ctx);
+      this.bubbles.forEach((bubble) => bubble.draw(this.ctx));
     }
   }
 
   loop() {
+    this.frame++;
     this.draw();
     this.update();
     requestAnimationFrame(() => this.loop());
