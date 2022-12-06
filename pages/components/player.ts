@@ -20,7 +20,7 @@ export class Player {
     this.y = game.height / 2;
     this.radus = 20;
     this.direction = 0;
-    this.speed = 10; // the smaller, the faster
+    this.speed = 20; // the smaller, the faster
 
     this.frame = 0;
     this.frameX = 0;

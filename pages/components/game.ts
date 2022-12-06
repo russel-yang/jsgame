@@ -7,6 +7,16 @@ export interface Mouse {
   clicked: boolean;
 }
 
+export interface gameAssets {
+  bubble?: {
+    sounds: HTMLAudioElement[];
+    sprite?: HTMLImageElement;
+  };
+  player?: {
+    sprite?: HTMLImageElement;
+  };
+}
+
 export class Game {
   canvas: HTMLCanvasElement;
   height: number;
@@ -16,8 +26,10 @@ export class Game {
   player: Player;
   bubbles: Bubble[];
   frame: number;
+  score: number;
+  assets: gameAssets;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, assets: gameAssets) {
     const rect = canvas.getBoundingClientRect();
     canvas.height = 500;
     canvas.width = 800;
@@ -25,6 +37,7 @@ export class Game {
     this.height = canvas.height;
     this.width = canvas.width;
     this.ctx = canvas.getContext("2d");
+    this.assets = assets;
     this.mouse = {
       x: this.width / 2,
       y: this.height / 2,
@@ -43,6 +56,7 @@ export class Game {
 
     this.frame = 0;
     this.player = new Player(this);
+    this.score = 0;
 
     this.bubbles = [];
   }
@@ -52,11 +66,19 @@ export class Game {
     if (this.frame % 50 === 0) {
       this.bubbles.push(new Bubble(this));
     }
+    this.bubbles = this.bubbles.filter((bubble) => bubble.x > 0);
     this.bubbles.forEach((bubble, index) => {
-      if (bubble.y < 0) {
-        this.bubbles.splice(index, 1);
-      }
       bubble.update();
+      if (bubble.distance < bubble.radius + this.player.radus) {
+        if (!bubble.counted) {
+          this.score++;
+          if (bubble.sound !== undefined) {
+            this.assets.bubble?.sounds[bubble.sound].play();
+          }
+          this.bubbles.splice(index, 1);
+          bubble.counted = true;
+        }
+      }
     });
   }
 
@@ -65,6 +87,9 @@ export class Game {
       this.ctx.clearRect(0, 0, this.width, this.height);
       this.player.draw(this.ctx);
       this.bubbles.forEach((bubble) => bubble.draw(this.ctx));
+      this.ctx.font = "30px Arial";
+      this.ctx.fillStyle = "black";
+      this.ctx.fillText(`score: ${this.score}`, 10, 30);
     }
   }
 

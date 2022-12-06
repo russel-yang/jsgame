@@ -5,14 +5,16 @@ import { Game } from './components/game';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const soundPopRef = useRef<HTMLAudioElement>(null);
+  const soundBubbleSingleRef = useRef<HTMLAudioElement>(null);
   let game: Game | null = null;
 
   useEffect(() => {
-    if (canvasRef.current && !game) {
-      game = new Game(canvasRef.current);
+    if (canvasRef.current && !game && soundPopRef.current && soundBubbleSingleRef.current) {
+      game = new Game(canvasRef.current, {bubble: {sounds: [soundPopRef.current, soundBubbleSingleRef.current]}});
       game.loop();
     }
-  }, [canvasRef, game]);
+  }, [canvasRef, game, soundPopRef]);
 
   return (
     <div className={styles.container}>
@@ -24,6 +26,8 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className='text-black text-lg'>html 2D game template</h1>
+        <audio ref={soundPopRef} src="/sounds/pop.ogg"/>
+        <audio ref={soundBubbleSingleRef} src="/sounds/bubbles-single1.wav"/>
         <canvas ref={canvasRef} className={styles.canvas}></canvas>
       </main>
     </div>
