@@ -31,8 +31,6 @@ export class Game {
     this.canvas.addEventListener("mousedown", (e: MouseEvent) => {
       this.mouse.x = e.x - rect.left;
       this.mouse.y = e.y - rect.top;
-      console.log(this.mouse, rect, e.x, e.y);
-
       this.mouse.clicked = true;
     });
 

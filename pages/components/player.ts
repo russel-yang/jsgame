@@ -16,11 +16,11 @@ export class Player {
 
   constructor(game: Game) {
     this.game = game;
-    this.x = game.width / 2;
+    this.x = game.width;
     this.y = game.height / 2;
     this.radus = 20;
     this.direction = 0;
-    this.speed = 20;
+    this.speed = 10; // the smaller, the faster
 
     this.frame = 0;
     this.frameX = 0;
