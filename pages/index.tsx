@@ -12,6 +12,7 @@ export default function Home() {
   useEffect(() => {
     if (canvasRef.current && !game && soundPopRef.current && soundBubbleSingleRef.current) {
       game = new Game(canvasRef.current, {bubble: {sounds: [soundPopRef.current, soundBubbleSingleRef.current]}});
+      game.attachInput();
       game.loop();
     }
   }, [canvasRef, game, soundPopRef]);
@@ -28,6 +29,8 @@ export default function Home() {
         <h1 className='text-black text-lg'>html 2D game template</h1>
         <audio ref={soundPopRef} src="/sounds/pop.ogg"/>
         <audio ref={soundBubbleSingleRef} src="/sounds/bubbles-single1.wav"/>
+        <img src="/fish/__cartoon_fish_06_red_idle.png" id="fish-idle-left" className="hidden"/>
+        <img src="/fish/__cartoon_fish_06_red_idle_flipped.png" id="fish-idle-right" className="hidden"/>
         <canvas ref={canvasRef} className={styles.canvas}></canvas>
       </main>
     </div>

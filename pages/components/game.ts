@@ -28,12 +28,13 @@ export class Game {
   frame: number;
   score: number;
   assets: gameAssets;
+  rect: DOMRect;
 
   constructor(canvas: HTMLCanvasElement, assets: gameAssets) {
-    const rect = canvas.getBoundingClientRect();
-    canvas.height = 500;
-    canvas.width = 800;
+    this.rect = canvas.getBoundingClientRect();
     this.canvas = canvas;
+    this.canvas.height = 500;
+    this.canvas.width = 800;
     this.height = canvas.height;
     this.width = canvas.width;
     this.ctx = canvas.getContext("2d");
@@ -44,21 +45,23 @@ export class Game {
       clicked: false,
     };
 
+    this.frame = 0;
+    this.player = new Player(this);
+    this.score = 0;
+
+    this.bubbles = [];
+  }
+
+  attachInput() {
     this.canvas.addEventListener("mousedown", (e: MouseEvent) => {
-      this.mouse.x = e.x - rect.left;
-      this.mouse.y = e.y - rect.top;
+      this.mouse.x = e.x - this.rect.left;
+      this.mouse.y = e.y - this.rect.top;
       this.mouse.clicked = true;
     });
 
     this.canvas.addEventListener("mouseup", (e: MouseEvent) => {
       this.mouse.clicked = false;
     });
-
-    this.frame = 0;
-    this.player = new Player(this);
-    this.score = 0;
-
-    this.bubbles = [];
   }
 
   update() {
