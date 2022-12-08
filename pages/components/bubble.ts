@@ -10,6 +10,7 @@ export class Bubble {
   distance: number;
   counted: boolean;
   sound?: number;
+  sprite: HTMLImageElement | null;
 
   constructor(game: Game) {
     this.game = game;
@@ -24,6 +25,7 @@ export class Bubble {
         Math.random() * this.game.assets.bubble?.sounds.length
       );
     }
+    this.sprite = document.getElementById("bubble-pop") as HTMLImageElement;
   }
 
   update() {
@@ -39,5 +41,18 @@ export class Bubble {
     ctx.fill();
     ctx.closePath();
     ctx.stroke();
+    if (this.sprite) {
+      ctx.drawImage(
+        this.sprite,
+        0,
+        0,
+        512,
+        512,
+        this.x - 30,
+        this.y - 30,
+        this.radius * 3,
+        this.radius * 3
+      );
+    }
   }
 }

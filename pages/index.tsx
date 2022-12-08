@@ -31,6 +31,7 @@ export default function Home() {
         <audio ref={soundBubbleSingleRef} src="/sounds/bubbles-single1.wav"/>
         <img src="/fish/__cartoon_fish_06_red_idle.png" id="fish-idle-left" className="hidden"/>
         <img src="/fish/__cartoon_fish_06_red_idle_flipped.png" id="fish-idle-right" className="hidden"/>
+        <img src="/bubble_pop_one_spritesheet_512px_by_512px_per_frame.png" id="bubble-pop" className="hidden"/>
         <img src="/backdrop.png" id="backdrop" className="hidden"/>
         <canvas ref={canvasRef} className={styles.canvas}></canvas>
       </main>
