@@ -83,7 +83,7 @@ export class Game {
         if (!bubble.counted) {
           this.score++;
           if (bubble.sound !== undefined) {
-            //this.assets.bubble?.sounds[bubble.sound].play();
+            this.assets.bubble?.sounds[bubble.sound].play();
           }
           this.bubbles.splice(index, 1);
           bubble.counted = true;
