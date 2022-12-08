@@ -35,12 +35,12 @@ export class Bubble {
     this.distance = Math.sqrt(dx * dx + dy * dy);
   }
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = "blue";
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.closePath();
-    ctx.stroke();
+    // ctx.fillStyle = "blue";
+    // ctx.beginPath();
+    // ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    // ctx.fill();
+    // ctx.closePath();
+    // ctx.stroke();
     if (this.sprite) {
       ctx.drawImage(
         this.sprite,
