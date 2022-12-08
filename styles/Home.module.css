@@ -15,7 +15,7 @@
 .canvas {
   width: 800px;
   height: 500px;
-  @apply mt-4 border;
+  @apply mt-4 border bg-gradient-to-b from-blue-100 via-blue-700 to-black;
 }
 
 .grid {

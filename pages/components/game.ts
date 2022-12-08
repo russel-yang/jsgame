@@ -1,3 +1,4 @@
+import { Backdrop } from "./backdrop";
 import { Bubble } from "./bubble";
 import { Player } from "./player";
 
@@ -29,6 +30,8 @@ export class Game {
   score: number;
   assets: gameAssets;
   rect: DOMRect;
+  backdrop: Backdrop;
+  speed: number;
 
   constructor(canvas: HTMLCanvasElement, assets: gameAssets) {
     this.rect = canvas.getBoundingClientRect();
@@ -48,6 +51,9 @@ export class Game {
     this.frame = 0;
     this.player = new Player(this);
     this.score = 0;
+    this.speed = 1;
+
+    this.backdrop = new Backdrop(this);
 
     this.bubbles = [];
   }
@@ -66,6 +72,7 @@ export class Game {
 
   update() {
     this.player.update();
+    this.backdrop.update();
     if (this.frame % 50 === 0) {
       this.bubbles.push(new Bubble(this));
     }
@@ -76,7 +83,7 @@ export class Game {
         if (!bubble.counted) {
           this.score++;
           if (bubble.sound !== undefined) {
-            this.assets.bubble?.sounds[bubble.sound].play();
+            //this.assets.bubble?.sounds[bubble.sound].play();
           }
           this.bubbles.splice(index, 1);
           bubble.counted = true;
@@ -88,6 +95,7 @@ export class Game {
   draw() {
     if (this.ctx) {
       this.ctx.clearRect(0, 0, this.width, this.height);
+      this.backdrop.draw();
       this.player.draw(this.ctx);
       this.bubbles.forEach((bubble) => bubble.draw(this.ctx));
       this.ctx.font = "30px Arial";
